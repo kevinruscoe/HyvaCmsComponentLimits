@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="hyva_cms_component_limits" showInDefault="1" sortOrder="85" translate="label">
+            <label>Hyvä CMS Component Limitations</label>
+            <tab>hyva_commerce</tab>
+            <resource>KevinRuscoe_HyvaCmsComponentLimits::limits</resource>
+            <group id="general" showInDefault="1" sortOrder="10" translate="label comment">
+                <label>Component Limitations</label>
+                <comment>Control where Hyvä CMS components can be placed: restrict a component to certain pages, blocks or menus, or only allow certain components in them.</comment>
+                <field id="manage" showInDefault="1" sortOrder="10" translate="label">
+                    <label>Limitations</label>
+                    <frontend_model>KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\System\Config\ManageButton</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

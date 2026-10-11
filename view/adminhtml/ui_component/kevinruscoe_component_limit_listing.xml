@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">kevinruscoe_component_limit_listing.kevinruscoe_component_limit_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="adminhtml/system_config/edit/section/hyva_cms_component_limits"/>
+                <class>back</class>
+                <label translate="true">Back to Configuration</label>
+            </button>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Component Limitation</label>
+            </button>
+        </buttons>
+        <spinner>kevinruscoe_component_limit_columns</spinner>
+        <deps>
+            <dep>kevinruscoe_component_limit_listing.kevinruscoe_component_limit_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="kevinruscoe_component_limit_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">rule_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>KevinRuscoe_HyvaCmsComponentLimits::limits</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="kevinruscoe_component_limit_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>rule_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete the selected limitations?</message>
+                        <title translate="true">Delete limitations</title>
+                    </confirm>
+                    <url path="componentlimits/limit/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="kevinruscoe_component_limit_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>rule_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="rule_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="mode" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="KevinRuscoe\HyvaCmsComponentLimits\Model\Source\Mode"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Mode</label>
+            </settings>
+        </column>
+        <column name="components">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Components</label>
+            </settings>
+        </column>
+        <column name="is_active" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Active</label>
+            </settings>
+        </column>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Modified</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="KevinRuscoe\HyvaCmsComponentLimits\Ui\Component\Listing\Column\LimitActions">
+            <settings>
+                <indexField>rule_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

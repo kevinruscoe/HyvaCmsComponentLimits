@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Every Hyva CMS save (editor, version restore, scheduled publish, import) goes through here -->
+    <type name="Hyva\CmsLiveviewEditor\Model\Provider">
+        <plugin name="kevinruscoe_hyva_cms_component_limits_enforce" type="KevinRuscoe\HyvaCmsComponentLimits\Plugin\EnforceComponentLimits"/>
+    </type>
+    <type name="Hyva\CmsLiveviewEditor\Magewire\LiveviewComposer">
+        <plugin name="kevinruscoe_hyva_cms_component_limits_editor" type="KevinRuscoe\HyvaCmsComponentLimits\Plugin\EditorComponentLimits"/>
+    </type>
+
+    <virtualType name="KevinRuscoe\HyvaCmsComponentLimits\Model\ResourceModel\Limit\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">kevinruscoe_hyva_cms_component_limit</argument>
+            <argument name="resourceModel" xsi:type="string">KevinRuscoe\HyvaCmsComponentLimits\Model\ResourceModel\Limit</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="kevinruscoe_component_limit_listing_data_source" xsi:type="string">KevinRuscoe\HyvaCmsComponentLimits\Model\ResourceModel\Limit\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

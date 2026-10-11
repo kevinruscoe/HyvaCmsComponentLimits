@@ -1,0 +1,43 @@
+<?php
+
+use KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\Editor\Limits;
+use Magento\Framework\Escaper;
+use Hyva\Theme\ViewModel\HyvaCsp;
+
+/** @var Limits $block */
+/** @var Escaper $escaper */
+/** @var HyvaCsp $hyvaCsp */
+
+$disallowed = $block->getDisallowedComponents();
+if (!$disallowed) {
+    return;
+}
+?>
+<script>
+(() => {
+    // Hide components that Component Limitations don't allow in this entity from the "Add a Component" picker.
+    // The component data is cached per browser (not per entity), so filter the picker's copy after it loads.
+    const disallowed = <?= /** @noEscape */ json_encode($disallowed) ?>;
+    const getComponentData = liveview.utilities.getComponentData;
+
+    liveview.utilities.getComponentData = async function(values) {
+        const data = await getComponentData.call(this, values);
+        const requestedValues = Array.isArray(values) ? values : [values];
+
+        if (!requestedValues.includes('categories') || !data?.categories) {
+            return data;
+        }
+
+        const categories = {};
+        Object.entries(data.categories).forEach(([name, components]) => {
+            const allowed = Object.values(components).filter(component => !disallowed.includes(component.name));
+            if (name === 'All' || allowed.length) {
+                categories[name] = allowed;
+            }
+        });
+
+        return { ...data, categories };
+    };
+})();
+</script>
+<?php if (isset($hyvaCsp)) $hyvaCsp->registerInlineScript(); ?>

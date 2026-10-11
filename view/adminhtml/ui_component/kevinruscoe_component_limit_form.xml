@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">kevinruscoe_component_limit_form.kevinruscoe_component_limit_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Component Limitation</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\Limit\Edit\BackButton"/>
+            <button name="delete" class="KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\Limit\Edit\DeleteButton"/>
+            <button name="save" class="KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\Limit\Edit\SaveButton"/>
+        </buttons>
+        <namespace>kevinruscoe_component_limit_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>kevinruscoe_component_limit_form.kevinruscoe_component_limit_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="kevinruscoe_component_limit_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="componentlimits/limit/save"/>
+        </settings>
+        <dataProvider class="KevinRuscoe\HyvaCmsComponentLimits\Model\Limit\DataProvider" name="kevinruscoe_component_limit_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>rule_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label/>
+        </settings>
+        <field name="rule_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>rule_id</dataScope>
+            </settings>
+        </field>
+        <field name="is_active" formElement="checkbox" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Active</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="name" formElement="input" sortOrder="20">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Name</label>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+        <field name="mode" formElement="select" sortOrder="25">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">restrict</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Mode</label>
+                <tooltip>
+                    <description translate="true"><![CDATA[<p>Example, with a "Utility Bar" component and a "utility-bar" block:</p><p><strong>Keep</strong>: Utility Bar can't be used anywhere except that block, but the block can still hold anything.</p><p><strong>Only allow</strong>: the block can only hold Utility Bar, but Utility Bar can still be used anywhere.</p><p><strong>Lock together</strong>: both.</p>]]></description>
+                </tooltip>
+                <dataScope>mode</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="KevinRuscoe\HyvaCmsComponentLimits\Model\Source\Mode"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="components" formElement="multiselect" sortOrder="30">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Components</label>
+                <notice translate="true">If a component is in several limitations, it is allowed wherever any of them allow it.</notice>
+                <dataScope>components</dataScope>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <size>15</size>
+                        <options class="KevinRuscoe\HyvaCmsComponentLimits\Model\Source\Components"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+    </fieldset>
+    <htmlContent name="conditions" sortOrder="20">
+        <argument name="data" xsi:type="array">
+            <item name="wrapper" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Places</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <settings>
+            <wrapper>
+                <canShow>true</canShow>
+                <componentType>fieldset</componentType>
+            </wrapper>
+        </settings>
+        <block class="KevinRuscoe\HyvaCmsComponentLimits\Block\Adminhtml\Limit\Edit\Conditions" name="kevinruscoe_component_limit_conditions"/>
+    </htmlContent>
+</form>

@@ -1,0 +1,25 @@
+{
+    "name": "kevinruscoe/module-hyva-cms-component-limits",
+    "description": "Admin-managed rules for where Hyvä CMS components can be placed, built with Magento's conditions builder.",
+    "type": "magento2-module",
+    "require": {
+        "php": ">=8.1",
+        "hyva-themes/commerce-module-cms": "^1.2",
+        "hyva-themes/commerce-module-menu-builder": "^1.0",
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-catalog-rule": "*",
+        "magento/module-cms": "*",
+        "magento/module-config": "*",
+        "magento/module-rule": "*",
+        "magento/module-ui": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "KevinRuscoe\\HyvaCmsComponentLimits\\": ""
+        }
+    }
+}
